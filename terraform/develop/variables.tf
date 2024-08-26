@@ -12,3 +12,9 @@ variable "tags" {
     updated_at = timestamp()
   }
 }
+
+variable "azs" {
+  type = list(string)
+  description = "Availability Zones"
+  default = ["ap-northeast-2a", "ap-northeast2c"]
+}
