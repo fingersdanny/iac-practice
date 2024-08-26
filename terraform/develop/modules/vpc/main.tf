@@ -53,7 +53,7 @@ resource "aws_route_table" "private_routing_table" {
     gateway_id = aws_nat_gateway.nat_gw.id
   }
 
-  tags = merge(var.tags {
+  tags = merge(var.tags, {
     Name = "Private Routing Table"
   })
 }
