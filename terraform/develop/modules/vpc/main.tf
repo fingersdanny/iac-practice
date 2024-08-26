@@ -50,10 +50,37 @@ resource "aws_route_table" "private_routing_table" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
+    gateway_id = aws_nat_gateway.nat_gw.id
   }
 
   tags = merge(var.tags {
     Name = "Private Routing Table"
   })
+}
+
+resource "aws_eip" "nat_eip" {
+  tags = merge(var.tags, {
+    Name = "NAT Gateway EIP"
+  })
+}
+
+resource "aws_nat_gateway" "nat_gw" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id = aws_subnet.public_subnets[0].id
+
+  tags = merge(var.tags, {
+    Name = "NAT Gateway"
+  })
+}
+
+resource "aws_route_table_association" "private_subnet_association" {
+  count = length(var.private_subnet_cidrs)
+  subnet_id = aws_subnet.private_subnets[count.index].id
+  route_table_id = aws_route_table.private_routing_table.id
+}
+
+resource "aws_route_table_association" "public_subnet_association" {
+  count = length(var.public_subnet_cidrs)
+  subnet_id = aws_subnet.public_subnets[count.index].id
+  route_table_id = aws_route_table.public_routing_table.id
 }
