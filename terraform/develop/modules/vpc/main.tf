@@ -24,5 +24,10 @@ resource "aws_subnet" "private_subnets" {
   })
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
 
-
+  tags = merge(var.tags, {
+    Name = "VPC Internet Gateway"
+  })
+}
