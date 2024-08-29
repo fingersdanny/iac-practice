@@ -8,7 +8,6 @@ variable "tags" {
   default = {
     environment = "production"
     owner = "hodako"
-
   }
 }
 
