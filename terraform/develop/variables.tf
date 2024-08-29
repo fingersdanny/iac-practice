@@ -8,8 +8,7 @@ variable "tags" {
   default = {
     environment = "production"
     owner = "hodako"
-    created_at = timestamp()
-    updated_at = timestamp()
+
   }
 }
 
