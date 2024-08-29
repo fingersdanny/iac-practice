@@ -10,7 +10,7 @@ module "vpc" {
 module "ec2" {
   source = "./modules/ec2"
 
-  tags = var.tags
+  tags   = var.tags
   region = var.region
-  azs = var.azs
+  azs    = var.azs
 }
